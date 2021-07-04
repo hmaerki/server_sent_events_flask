@@ -1,0 +1,15 @@
+<h1>Server Sent Events and Flask - Test communication and reconnects</h1>
+
+<div id="fragments"></div>
+
+<script>
+    function sse_onmessage(event) {
+        // console.debug(`lastEventId (id) ${event.lastEventId}`)
+        const data = JSON.parse(event.data);
+        document.getElementById('fragments').insertAdjacentHTML('afterbegin', data.html);
+
+    };
+
+    const evtSource = new EventSource('{{ url_for("server_sent_events_stream") }}');
+    evtSource.onmessage = sse_onmessage;
+</script>
